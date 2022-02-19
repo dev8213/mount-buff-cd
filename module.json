@@ -1,0 +1,11 @@
+{
+    "author": "dev8213",
+    "name": "mount-buff-cd",
+    "disableAutoUpdate": false,
+    "servers": ["https://raw.githubusercontent.com/dev8213/mount-buff-cd/master/"],
+    "options": {
+        "niceName": "Mount Buff",
+        "guiName": "Mount Buff",
+        "reloadable": true
+    }
+}
