@@ -1,0 +1,1 @@
+show cooldown of crit mount (1.5/2.0) on manage effect bar
