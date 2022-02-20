@@ -70,7 +70,7 @@ module.exports = function mountcrit(mod) {
 			}
 		} else if (p1 == 'm') {
 			if (p2 == 'reset') {
-				config.am = 0
+				config.m = 0
 				mod.command.message('ancient mighty using default icon now')
 				JSONsave(config)
 				return
@@ -78,7 +78,7 @@ module.exports = function mountcrit(mod) {
 			if (isNaN(p2)) {
 				mod.command.message('arg must be a number')
 			} else {
-				config.am = p2
+				config.m = p2
 				mod.command.message('custom icon for mighty set to: '+p2)
 				JSONsave(config)
 			}
