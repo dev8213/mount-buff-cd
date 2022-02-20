@@ -1,20 +1,20 @@
 const path = require('path')
 const fs = require('fs')
-const dec = [11000,15000,20000]
-const inc = [1500,2000,3000]
+const dec = [7000,9000,11000,15000,20000]
+const inc = [1000,1200,1500,2000,3000]
 module.exports = function mountcrit(mod) {
 	
 	let mounts = reloadJS('./lib/mounts.js'),
 		sup = [], drt = 0, cdr = 0
 	
 	mod.game.initialize('inventory');
-	//5160217 5160218 5160219
+	//5160215 5160216 5160217 5160218 5160219
 	mod.game.inventory.on('update', () => {
         try { sup = mod.game.inventory.equipment.slots['4'].passivitySets[0].passivities } catch (e) { sup = [], drt = 0, cdr = 0 }
 		if (sup.length == 0) return
-        if (sup[0] >= 5160217 && sup[0] <= 5160219) {
-			drt = inc[(sup[0]+3)%10]
-			cdr = dec[(sup[0]+3)%10]
+        if (sup[0] >= 5160215 && sup[0] <= 5160219) {
+			drt = inc[(sup[0]+5)%10]
+			cdr = dec[(sup[0]+5)%10]
 		}
 		else drt = cdr = 0
    })
