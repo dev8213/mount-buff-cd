@@ -6,3 +6,4 @@ package.json
 .backup/**
 .parser/**
 node_modules/**
+config.json
