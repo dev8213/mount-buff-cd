@@ -71,7 +71,7 @@ module.exports = function mountcrit(mod) {
 		} else if (p1 == 'm') {
 			if (p2 == 'reset') {
 				config.m = 0
-				mod.command.message('ancient mighty using default icon now')
+				mod.command.message('mighty using default icon now')
 				JSONsave(config)
 				return
 			}
