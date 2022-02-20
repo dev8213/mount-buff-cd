@@ -6,6 +6,6 @@ Toolbox(/8) | Command description
 **buff** | Module on/off (default on).
 **buff am (abn id)** | Custom skill icon for ancient mighty cooldown buff (default off).
 **buff am reset** | Default skill icon for ancient mighty cooldown buff.
-**buff m (abn id)** | Custom skill icon for mighty cooldown buff.
+**buff m (abn id)** | Custom skill icon for mighty cooldown buff (default off).
 **buff m reset** | Default skill icon for mighty cooldown buff.
 **buff reload** | Reload lib data.
