@@ -13,8 +13,8 @@ module.exports = function mountcrit(mod) {
         try { sup = mod.game.inventory.equipment.slots['4'].passivitySets[0].passivities } catch (e) { sup = [], drt = 0, cdr = 0 }
 		if (sup.length == 0) return
         if (sup[0] >= 5160217 && sup[0] <= 5160219) {
-			drt = inc[(sup[i]+3)%10]
-			cdr = dec[(sup[i]+3)%10]
+			drt = inc[(sup[0]+3)%10]
+			cdr = dec[(sup[0]+3)%10]
 		}
 		else drt = cdr = 0
    })
@@ -22,7 +22,7 @@ module.exports = function mountcrit(mod) {
 	mod.hook('S_ABNORMALITY_BEGIN', '*', (event) => {
 		if (event.target != mod.game.me.gameId) return
 		let mount = mounts.find(obj => obj.id == event.id)
-		if (mount) mod.setTimeout(abn,Number(event.duration)+drt+10,mount.id,mount.cd-Number(event.duration)-drt-cdr-20)
+		if (mount) mod.setTimeout(abn,Number(event.duration)+drt+100,mount.id,mount.cd-Number(event.duration)-drt-cdr-200)
 	})
 	function abn(id, duration) {
         mod.send('S_ABNORMALITY_BEGIN', 5, {
