@@ -5,18 +5,18 @@ const inc = [1500,2000,3000]
 module.exports = function mountcrit(mod) {
 	
 	let mounts = reloadJS('./lib/mounts.js'),
-		sup, drt = 0, cdr = 0
+		sup = [], drt = 0, cdr = 0
 	
 	mod.game.initialize('inventory');
 	//5160217 5160218 5160219
 	mod.game.inventory.on('update', () => {
         try { sup = mod.game.inventory.equipment.slots['4'].passivitySets[0].passivities } catch (e) { sup = [], drt = 0, cdr = 0 }
-        for (let i = 0; i < sup?.length; i++) {
-            if (sup[i] >= 5160217 && sup[i] <= 5160219) {
-				drt = inc[(sup[i]+3)%10]
-				cdr = dec[(sup[i]+3)%10]
-			}
-        }
+		if (sup.length == 0) return
+        if (sup[0] >= 5160217 && sup[0] <= 5160219) {
+			drt = inc[(sup[i]+3)%10]
+			cdr = dec[(sup[i]+3)%10]
+		}
+		else drt = cdr = 0
    })
 	
 	mod.hook('S_ABNORMALITY_BEGIN', '*', (event) => {
