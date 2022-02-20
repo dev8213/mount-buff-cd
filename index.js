@@ -1,3 +1,4 @@
+String.prototype.clr = function (hexColor) { return `<font color='#${hexColor}'>${this}</font>` }
 const path = require('path')
 const fs = require('fs')
 const dec = [7000,9000,11000,15000,20000]
@@ -5,7 +6,8 @@ const inc = [1000,1200,1500,2000,3000]
 module.exports = function mountcrit(mod) {
 	
 	let mounts = reloadJS('./lib/mounts.js'),
-		sup = [], drt = 0, cdr = 0
+		sup = [], drt = 0, cdr = 0,
+		enabled = true
 	
 	mod.game.initialize('inventory');
 	//5160215 5160216 5160217 5160218 5160219
@@ -24,6 +26,18 @@ module.exports = function mountcrit(mod) {
 		let mount = mounts.find(obj => obj.id == event.id)
 		if (mount) mod.setTimeout(abn,Number(event.duration)+50,mount.id,mount.cd-Number(event.duration)-cdr-100)
 	})
+
+	mod.command.add('buff', (p1)=> {
+		if (p1) p1 = p1.toLowerCase()
+		if (p1 == null) {
+			enabled = !enabled
+			mod.command.message('is ' + (enabled ? 'enabled'.clr('56B4E9') : 'disabled'.clr('E69F00')))
+		} else if (p1 == 'reload') {
+			mounts = reloadJS('./lib/mounts.js')
+			mod.command.message('data has been reloaded')
+		}
+	})
+	
 	function abn(id, duration) {
         mod.send('S_ABNORMALITY_BEGIN', 5, {
             target: mod.game.me.gameId,
