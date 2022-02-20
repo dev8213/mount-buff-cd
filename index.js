@@ -22,7 +22,7 @@ module.exports = function mountcrit(mod) {
 	mod.hook('S_ABNORMALITY_BEGIN', '*', (event) => {
 		if (event.target != mod.game.me.gameId) return
 		let mount = mounts.find(obj => obj.id == event.id)
-		if (mount) mod.setTimeout(abn,Number(event.duration)+drt+100,mount.id,mount.cd-Number(event.duration)-drt-cdr-200)
+		if (mount) mod.setTimeout(abn,Number(event.duration)+50,mount.id,mount.cd-Number(event.duration)-100)
 	})
 	function abn(id, duration) {
         mod.send('S_ABNORMALITY_BEGIN', 5, {
