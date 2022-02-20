@@ -24,7 +24,7 @@ module.exports = function mountcrit(mod) {
 	mod.hook('S_ABNORMALITY_BEGIN', '*', (event) => {
 		if (event.target != mod.game.me.gameId) return
 		let mount = mounts.find(obj => obj.id == event.id)
-		if (mount) mod.setTimeout(abn,Number(event.duration)+50,mount.id,mount.cd-Number(event.duration)-cdr-100)
+		if (mount) mod.setTimeout(abn,Number(event.duration)+50,mount.icon,mount.cd-Number(event.duration)-cdr-100)
 	})
 
 	mod.command.add('buff', (p1)=> {
