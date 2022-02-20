@@ -1,8 +1,8 @@
 {
     "files": {
         "README.md": "02d4c40bebf70cc27fb5f2732949bbfc84a15d704f829e3e652060a6a13024fd",
-        "index.js": "2683aa5d400d5fe4d71dae81f9ee8f20a382ff1f581e177312b4c04aa1f017cf",
-        "lib/mounts.js": "2f2675603d94302365535068864011d3441c538d7ce8e361048e09f18bc8a610",
+        "index.js": "1d4345c59962c79523aaa7953e0561aecfa21075849d8a0e2e1c518eff3e2a26",
+        "lib/mounts.js": "73f7ba9c18b851d8cc6a16bd607728d6d59ae77f96bb41679c3782020699bcc9",
         "module.json": "c69c602f95945534ddff0b92f621924bc3132edebac620699e78dd9793d0bc6c"
     }
 }

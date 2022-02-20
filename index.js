@@ -101,8 +101,8 @@ module.exports = function mountcrit(mod) {
         }, duration);
     }
 	function icon(mount) {
-		if (mount.type == "ancient mighty" && config.am != 0) return config.am
-		else if (mount.type == "mighty" && config.m != 0) return config.m
+		if (mount.type === "ancient mighty" && config.am != 0) return config.am
+		else if (mount.type === "mighty" && config.m != 0) return config.m
 		else return mount.id
 	}
 	function reload(fileName) {
