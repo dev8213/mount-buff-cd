@@ -3,11 +3,12 @@ const path = require('path')
 const fs = require('fs')
 const dec = [7000,9000,11000,15000,20000]
 const inc = [1000,1200,1500,2000,3000]
-module.exports = function mountcrit(mod) {
+module.exports = function buffcd(mod) {
 	
 	function get_config() {
 		const def = {
 			"enabled": true,
+			"ar": 0,
 			"am": 0,
 			"m": 0
 		};
@@ -19,14 +20,16 @@ module.exports = function mountcrit(mod) {
 		}
 	}
 	
-	let mounts = reload('./lib/mounts.js'),
+	const { entity, player } = mod.require.library
+	
+	let buffs = reload('./lib/buffs.js'),
 		sup = [], drt = 0, cdr = 0,
 		config = get_config(),
 		enabled = true,
 		custom = false
+		
 	
 	mod.game.initialize('inventory');
-	//5160215 5160216 5160217 5160218 5160219
 	mod.game.inventory.on('update', () => {
         try { sup = mod.game.inventory.equipment.slots['4'].passivitySets[0].passivities } catch (e) { sup = [], drt = 0, cdr = 0 }
 		if (sup.length == 0) return
@@ -38,9 +41,15 @@ module.exports = function mountcrit(mod) {
    })
 	
 	mod.hook('S_ABNORMALITY_BEGIN', '*', (event) => {
-		if (config.enabled && event.target == mod.game.me.gameId) {
-			let mount = mounts.find(obj => obj.id == event.id)
-		if (mount) mod.setTimeout(abn,Number(event.duration)+50,icon(mount),mount.cd-Number(event.duration)-cdr-100)
+		if (!config.enabled) return
+		if (event.target == mod.game.me.gameId) {
+			if (player.playersInParty.has(event.source) && event.target != event.source) {
+				let pbuff = buffs.find(obj => obj.id == event.id)
+				if (pbuff) mod.setTimeout(abn,Number(event.duration)+50,icon(pbuff),calcdr(pbuff)-Number(event.duration)-100)
+			} else {
+				let buff = buffs.find(obj => obj.id == event.id)
+			if (buff) mod.setTimeout(abn,Number(event.duration)+50,icon(buff),buff.cd-Number(event.duration)-cdr-100)
+			}
 		}
 	})
 
@@ -52,8 +61,22 @@ module.exports = function mountcrit(mod) {
 			mod.command.message('is ' + (config.enabled ? 'enabled'.clr('56B4E9') : 'disabled'.clr('E69F00')))
 			JSONsave(config)
 		} else if (p1 == 'reload') {
-			mounts = reload('./lib/mounts.js')
+			buffs = reload('./lib/buffs.js')
 			mod.command.message('data has been reloaded')
+		} else if (p1 == 'ar') {
+			if (p2 == 'reset') {
+				config.ar = 0
+				mod.command.message('adrenaline rush using default icon now')
+				JSONsave(config)
+				return
+			}
+			if (isNaN(p2)) {
+				mod.command.message('arg must be a number')
+			} else {
+				config.ar = p2
+				mod.command.message('custom icon for adrenaline rush set to: '+p2)
+				JSONsave(config)
+			}
 		} else if (p1 == 'am') {
 			if (p2 == 'reset') {
 				config.am = 0
@@ -100,10 +123,14 @@ module.exports = function mountcrit(mod) {
             });
         }, duration);
     }
-	function icon(mount) {
-		if (mount.type === "ancient mighty" && config.am != 0) return config.am
-		else if (mount.type === "mighty" && config.m != 0) return config.m
-		else return mount.id
+	function icon(buff) {
+		if (buff.type === "ancient mighty" && config.am != 0) return config.am
+		else if (buff.type === "mighty" && config.m != 0) return config.m
+		else if (buff.type === "party buff" && config.ar != 0) return config.ar
+		else return buff.id
+	}
+	function calcdr(buff) {
+		return Math.round((100-buff.cdr)*buff.cd/100)
 	}
 	function reload(fileName) {
 		delete require.cache[require.resolve(fileName)]
