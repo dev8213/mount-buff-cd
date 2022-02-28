@@ -127,7 +127,7 @@ module.exports = function buffcd(mod) {
 		})
 		mod.setTimeout(abn_end,duration,id)
 	}
-    function abn_end(id) {
+	function abn_end(id) {
 		mod.send('S_ABNORMALITY_END', 1, {
 			target: mod.game.me.gameId,
 			id: id
