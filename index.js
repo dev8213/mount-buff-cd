@@ -31,14 +31,13 @@ module.exports = function buffcd(mod) {
 	
 	mod.game.initialize('inventory');
 	mod.game.inventory.on('update', () => {
-        try { sup = mod.game.inventory.equipment.slots['4'].passivitySets[0].passivities } catch (e) { sup = [], drt = 0, cdr = 0 }
+		try { sup = mod.game.inventory.equipment.slots['4'].passivitySets[0].passivities } catch (e) { sup = [], drt = 0, cdr = 0 }
 		if (sup.length == 0) return
         if (sup[0] >= 5160215 && sup[0] <= 5160219) {
 			drt = inc[(sup[0]+5)%10]
 			cdr = dec[(sup[0]+5)%10]
-		}
-		else drt = cdr = 0
-   })
+		} else drt = cdr = 0
+	})
 	
 	mod.hook('S_ABNORMALITY_BEGIN', '*', (event) => {
 		if (!config.enabled) return
