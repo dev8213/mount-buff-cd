@@ -45,10 +45,20 @@ module.exports = function buffcd(mod) {
 		if (event.target == mod.game.me.gameId) {
 			if (player.playersInParty.has(event.source) && event.target != event.source) {
 				let pbuff = buffs.find(obj => obj.id == event.id)
-				if (pbuff) mod.setTimeout(abn,Number(event.duration)+50,icon(pbuff),calcdr(pbuff)-Number(event.duration)-100)
+				if (pbuff) {
+					abn_end(icon(pbuff))
+					abn_start(event.id,Number(event.duration))
+					mod.setTimeout(abn_start,Number(event.duration)+50,icon(pbuff),calcdr(pbuff)-Number(event.duration)-100)
+					return false
+				}
 			} else {
 				let buff = buffs.find(obj => obj.id == event.id)
-			if (buff) mod.setTimeout(abn,Number(event.duration)+50,icon(buff),buff.cd-Number(event.duration)-cdr-100)
+				if (buff) {
+					abn_end(icon(buff))
+					abn_start(event.id,Number(event.duration))
+					mod.setTimeout(abn_start,Number(event.duration)+50,icon(buff),buff.cd-Number(event.duration)-cdr-100)
+					return false
+				}
 			}
 		}
 	})
@@ -108,7 +118,7 @@ module.exports = function buffcd(mod) {
 		}
 	})
 	
-	function abn(id, duration) {
+	function abn_start(id, duration) {
         mod.send('S_ABNORMALITY_BEGIN', 5, {
             target: mod.game.me.gameId,
             source: mod.game.me.gameId,
@@ -116,12 +126,13 @@ module.exports = function buffcd(mod) {
             duration: duration,
             stacks: 1
         });
-		mod.setTimeout(() => {
-            mod.send('S_ABNORMALITY_END', 1, {
-                target: mod.game.me.gameId,
-                id: id
-            });
-        }, duration);
+		mod.setTimeout(abn_end,duration,id)
+    }
+	function abn_end(id) {
+        mod.send('S_ABNORMALITY_END', 1, {
+			target: mod.game.me.gameId,
+			id: id
+		});
     }
 	function icon(buff) {
 		if (buff.type === "ancient mighty" && config.am != 0) return config.am
