@@ -118,21 +118,21 @@ module.exports = function buffcd(mod) {
 	})
 	
 	function abn_start(id, duration) {
-        mod.send('S_ABNORMALITY_BEGIN', 5, {
-            target: mod.game.me.gameId,
-            source: mod.game.me.gameId,
-            id: id,
-            duration: duration,
-            stacks: 1
-        });
+		mod.send('S_ABNORMALITY_BEGIN', 5, {
+			target: mod.game.me.gameId,
+			source: mod.game.me.gameId,
+			id: id,
+			duration: duration,
+			stacks: 1
+		})
 		mod.setTimeout(abn_end,duration,id)
-    }
-	function abn_end(id) {
-        mod.send('S_ABNORMALITY_END', 1, {
+	}
+    function abn_end(id) {
+		mod.send('S_ABNORMALITY_END', 1, {
 			target: mod.game.me.gameId,
 			id: id
-		});
-    }
+		})
+	}
 	function icon(buff) {
 		if (buff.type === "ancient mighty" && config.am != 0) return config.am
 		else if (buff.type === "mighty" && config.m != 0) return config.m
