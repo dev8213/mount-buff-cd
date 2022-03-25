@@ -26,6 +26,7 @@ module.exports = function buffcd(mod) {
 		sup = [], drt = 0, cdr = 0,
 		config = get_config(),
 		enabled = true,
+		retreat = true,
 		custom = false
 		
 	
@@ -36,6 +37,8 @@ module.exports = function buffcd(mod) {
 		if (sup[0] >= 5160215 && sup[0] <= 5160219) {
 			drt = inc[(sup[0]+5)%10]
 			cdr = dec[(sup[0]+5)%10]
+		} if (sup[0] >= 5160263 && sup[0] <= 5160267) {
+			retreat = false
 		} else drt = cdr = 0
 	})
 	
@@ -50,6 +53,9 @@ module.exports = function buffcd(mod) {
 					mod.setTimeout(abn_start,Number(event.duration)+50,icon(pbuff),calcdr(pbuff)-Number(event.duration)-100)
 					return false
 				}
+			} else if (!retreat && event.id == 10155020) {
+				event.cooldown *= 2
+				return true
 			} else {
 				let buff = buffs.find(obj => obj.id == event.id)
 				if (buff) {

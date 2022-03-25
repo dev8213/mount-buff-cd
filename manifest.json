@@ -1,8 +1,8 @@
 {
     "files": {
         "README.md": "02d4c40bebf70cc27fb5f2732949bbfc84a15d704f829e3e652060a6a13024fd",
-        "index.js": "e85ddc5b707cbb3545919b9a7582f3f9812ebe19a347785ee881f092762a46ef",
-        "lib/buffs.js": "1bd824f89ca27c8fb8b3e7b3bbd83fe80589068f67c4c3db64ee213dca39c81a",
+        "index.js": "7d03a06a268f5af2015accd65b58e40871a8ce197153c19440e7226be134f1e5",
+        "lib/buffs.js": "7b384be14a2b03c58ac633c5297b5e9c503391b7d4a9586ab8dba2e333b073e0",
         "module.json": "c69c602f95945534ddff0b92f621924bc3132edebac620699e78dd9793d0bc6c"
     }
 }
