@@ -55,7 +55,9 @@ module.exports = function buffcd(mod) {
 				}
 			} else if (!retreat && event.id == 10155020) {
 				event.cooldown *= 2
-				return true
+				abn_end(event.id)
+				abn_start(event.id,Number(event.duration))
+				return false
 			} else {
 				let buff = buffs.find(obj => obj.id == event.id)
 				if (buff) {
