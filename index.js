@@ -37,7 +37,7 @@ module.exports = function buffcd(mod) {
 		if (sup[0] >= 5160215 && sup[0] <= 5160219) {
 			drt = inc[(sup[0]+5)%10]
 			cdr = dec[(sup[0]+5)%10]
-		} if (sup[0] >= 5160263 && sup[0] <= 5160267) {
+		} else if (sup[0] >= 5160263 && sup[0] <= 5160267) {
 			retreat = false
 		} else drt = cdr = 0
 	})
