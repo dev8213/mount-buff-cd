@@ -32,17 +32,17 @@ module.exports = function buffcd(mod) {
 	
 	mod.game.initialize('inventory');
 	mod.game.inventory.on('update', () => {
-		try { sup = mod.game.inventory.equipment.slots['4'].passivitySets[0].passivities } catch (e) { sup = [], drt = 0, cdr = 0 }
+		try { sup = mod.game.inventory.equipment.slots['4'].passivitySets[0].passivities } catch (e) { sup = [], drt = 0, cdr = 0; retreat = true }
 		if (sup.length == 0) return
 		if (sup[0] >= 5160215 && sup[0] <= 5160219) {
 			drt = inc[(sup[0]+5)%10]
 			cdr = dec[(sup[0]+5)%10]
 		} else if (sup[0] >= 5160263 && sup[0] <= 5160267) {
 			retreat = false
-		} else drt = cdr = 0
+		} else { drt = cdr = 0; retreat = true }
 	})
 	
-	mod.hook('S_ABNORMALITY_BEGIN', '*', (event) => {
+	mod.hook('S_ABNORMALITY_BEGIN', '*', {filter: {fake: null}}, (event) => {
 		if (!config.enabled) return
 		if (event.target == mod.game.me.gameId) {
 			if (player.playersInParty.has(event.source) && event.target != event.source) {
@@ -53,11 +53,6 @@ module.exports = function buffcd(mod) {
 					mod.setTimeout(abn_start,Number(event.duration)+50,icon(pbuff),calcdr(pbuff)-Number(event.duration)-100)
 					return false
 				}
-			} else if (!retreat && event.id == 10155020) {
-				event.cooldown *= 2
-				abn_end(event.id)
-				abn_start(event.id,Number(event.duration))
-				return false
 			} else {
 				let buff = buffs.find(obj => obj.id == event.id)
 				if (buff) {
