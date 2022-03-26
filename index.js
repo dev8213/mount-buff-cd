@@ -42,7 +42,7 @@ module.exports = function buffcd(mod) {
 		} else { drt = cdr = 0; retreat = true }
 	})
 	
-	mod.hook('S_ABNORMALITY_BEGIN', '*', {filter: {fake: null}}, (event) => {
+	mod.hook('S_ABNORMALITY_BEGIN', '*', (event) => {
 		if (!config.enabled) return
 		if (event.target == mod.game.me.gameId) {
 			if (player.playersInParty.has(event.source) && event.target != event.source) {
