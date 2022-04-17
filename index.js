@@ -8,6 +8,7 @@ module.exports = function buffcd(mod) {
 	function get_config() {
 		const def = {
 			"enabled": true,
+			"show_arush_cd": false,
 			"ar": 0,
 			"am": 0,
 			"m": 0
@@ -46,6 +47,7 @@ module.exports = function buffcd(mod) {
 		if (!config.enabled) return
 		if (event.target == mod.game.me.gameId) {
 			if (player.playersInParty.has(event.source) && event.target != event.source) {
+				if (!config.show_arush_cd) return
 				let pbuff = buffs.find(obj => obj.id == event.id)
 				if (pbuff) {
 					abn_end(icon(pbuff))
@@ -70,12 +72,18 @@ module.exports = function buffcd(mod) {
 		if (p2) p2 = p2.toLowerCase()
 		if (p1 == null) {
 			config.enabled = !config.enabled
-			mod.command.message('is ' + (config.enabled ? 'enabled'.clr('56B4E9') : 'disabled'.clr('E69F00')))
+			mod.command.message(config.enabled ? 'Enabled'.clr('56B4E9') : 'Disabled'.clr('E69F00'))
 			JSONsave(config)
 		} else if (p1 == 'reload') {
 			buffs = reload('./lib/buffs.js')
 			mod.command.message('data has been reloaded')
 		} else if (p1 == 'ar') {
+			if (!p2) {
+				config.show_arush_cd = !config.show_arush_cd
+				mod.command.message('Arush CD ' + (config.show_arush_cd ? 'Shown'.clr('56B4E9') : 'Hidden'.clr('E69F00')))
+				JSONsave(config)
+				return
+			}
 			if (p2 == 'reset') {
 				config.ar = 0
 				mod.command.message('adrenaline rush using default icon now')
